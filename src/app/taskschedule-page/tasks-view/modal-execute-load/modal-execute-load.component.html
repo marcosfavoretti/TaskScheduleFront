@@ -1,0 +1,19 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title tittle-responsive text-center" id="modal-basic-title">Comando sendo executado
+        </h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body bg-red">
+        <div class="p-5 w-100 d-flex align-items-center justify-content-center">
+
+            <div *ngIf="!results" class="bg-secondary" id="spinner"></div>
+            <div *ngIf="results">
+                <p style="overflow-y: auto;">
+                    {{results}}
+                </p>
+            </div>
+
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,20 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title tittle-responsive text-center" id="modal-basic-title">Edição de tasks
+        </h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form class="d-flex flex-column w-100 p-3" (ngSubmit)="submitForm()">
+            <input class="input-group rounded mb-2" type="text" name="id" disabled [value]="view_task.id_task">
+
+            <input class="input-group rounded mb-2" type="text" [(ngModel)]="task.name" name="name">
+
+            <input class="input-group rounded mb-2" type="text" [(ngModel)]="task.command" name="comando">
+
+            <input class="input-group rounded mb-2" type="text" [(ngModel)]="task.time
+            " name="cron">
+            <button class="btn btn-group btn-success responsive_font text-center" type="submit">Enviar</button>
+        </form>
+    </div>
+</ng-template>
