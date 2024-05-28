@@ -1,0 +1,39 @@
+::ng-deep .p-panelmenu-header {
+    padding: 10% 0 0 0;
+    color: white;
+
+}
+
+::ng-deep .p-panelmenu-header-action {
+    text-decoration: none;
+}
+
+::ng-deep .p-menuitem-text {
+    color: white;
+    font-size: clamp(1.125rem, 1.0682rem + 0.1515vw, 1.25rem);
+}
+
+::ng-deep .p-panelmenu-content {
+    border-radius: 5px;
+    border: dashed white 2px;
+    padding: 2% 0;
+}
+
+::ng-deep .p-panelmenu-header-content {
+    text-align: center;
+}
+
+::ng-deep .p-menuitem-icon {
+    color: white;
+    /* padding: 0 10%; */
+}
+
+::ng-deep .p-icon-wrapper {
+    color: white;
+}
+
+
+ol,
+ul {
+    padding: 0;
+}

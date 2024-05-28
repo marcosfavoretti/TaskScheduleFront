@@ -1,0 +1,12 @@
+<div class="px-3 w-100 h-100 overflow-hidden overflow-y-scroll">
+  <p-panelMenu [multiple]="true" styleClass="text-white" [model]="tasks">
+    <ng-template pTemplate="item" let-item>
+      <div class="d-flex flex-column ">
+        <pre>{{item | keyValuePrinter}}</pre>
+        <app-button-canva [task]="item"></app-button-canva>
+      </div>
+    </ng-template>
+  </p-panelMenu>
+</div>
+
+<app-modal [visible]="modalstatus"></app-modal>

@@ -1,0 +1,51 @@
+<!-- task-form.component.html -->
+<!-- <h1 class="responsive_font text-secondary">Criar nova Task</h1>
+<div class="container align-items-center justify-content-start shadow-sm rounded flex-column mb-2 h-100 w-100"
+    style="border: solid black 1px;">
+    <form class="d-flex flex-column w-100 p-3" (ngSubmit)="submitForm()">
+        <input class="input-group rounded mb-2" type="text" [(ngModel)]="task.name" name="name"
+            placeholder="nome da task">
+        <input class="input-group rounded mb-2" type="text" [(ngModel)]="task.command" name="comando"
+            placeholder="comando da task">
+        <input class="input-group rounded mb-2" type="text" [(ngModel)]="task.time" name="cron"
+            placeholder="tempo da task em cronn">
+        <button class="btn btn-group btn-success responsive_font text-center" type="submit">Enviar</button>
+    </form>
+</div> -->
+<div class="bg-white rounded p-3 w-100 mt-5">
+    <h1 class="fst-italic text-center">Cadastro de tarefas</h1>
+    <hr>
+    <form #forms="ngForm" class="d-flex flex-column w-100 py-4 container" (ngSubmit)="submitForm(forms)">
+        <div class="row">
+            <div class="col-6 d-flex justify-content-end align-items-end">
+                <span class="p-float-label col-md-6 col-12">
+                    <input pInputText class="input-group rounded p-3 w-100" id="nome" name="nome" type="text" ngModel
+                        required />
+                    <label for="usuario" class="px-3">nome
+
+                    </label>
+                </span>
+            </div>
+            <div class="col-6 d-flex justify-content-start align-items-start">
+                <span class="p-float-label col-md-6 col-12">
+                    <input pInputText class="input-group rounded p-3 w-100" id="tempo" name="tempo" type="text" ngModel
+                        required />
+                    <label for="usuario" class="px-3">tempo
+
+                    </label>
+                </span>
+            </div>
+        </div>
+        <div class="d-flex align-content-center justify-content-center mb-4">
+            <span class="p-float-label mt-4 col-md-6 col-12">
+                <input pInputText class="input-group rounded p-3 w-100" id="comando" name="comando" type="text" ngModel
+                    required />
+                <label for="usuario" class="px-3">comando</label>
+            </span>
+        </div>
+        <div class="d-flex align-items-end justify-content-end">
+            <p-button icon="pi pi-check" type="submit"
+                styleClass="btn rounded text-white btn-success d-flex align-items-center justify-content-centers " />
+        </div>
+    </form>
+</div>

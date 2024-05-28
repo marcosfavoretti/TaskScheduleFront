@@ -1,9 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ITask } from '../../forms-cad/ITask';
 import { MessageService } from 'primeng/api';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Task } from '../../Object/tasks';
-import { ServiceTaskService } from 'src/app/service/service-task.service';
+import { ServiceTaskService } from 'src/app/@core/service/service-task.service';
 
 @Component({
   selector: 'app-modal-execute-load',

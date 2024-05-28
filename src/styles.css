@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.responsive_font {
+    font-size: clamp(0.875rem, 0.7614rem + 0.303vw, 1.125rem);
+
+}
+
+.responsive_font_tittle {
+    font-size: clamp(1.5rem, 1.5vw, 2rem);
+
+}
