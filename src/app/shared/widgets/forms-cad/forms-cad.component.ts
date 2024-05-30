@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ServiceTaskService } from 'src/app/@core/service/service-task.service';
 import { MessageService } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { HandleTask } from 'src/app/@core/interfaces/handle-task';
+import { Task } from 'src/app/@core/models/task';
+import { CreateTask } from 'src/app/@core/interfaces/create-task';
+import { FormsTask } from 'src/app/@core/interfaces/forms-task';
 
 @Component({
   selector: 'app-forms-cad',
@@ -10,13 +13,14 @@ import { HandleTask } from 'src/app/@core/interfaces/handle-task';
   styleUrls: ['./forms-cad.component.css']
 })
 export class FormsCadComponent {
-
-  constructor(private tasks: ServiceTaskService, private msg: MessageService) {
-
-  }
+  @Input('tittle') tittle!: string
+  @Input("preset-input") preset_input?: CreateTask
+  @Output('forms-submit') forms_submit: EventEmitter<FormsTask> = new EventEmitter<FormsTask>();
+  constructor(
+    private msg: MessageService) { }
   async submitForm(forms: NgForm) {
     if (!forms.valid) {
-      console.log('invalido')
+      console.log('invalido', forms.value)
       this.msg.add({
         closable: false,
         detail: `Fomulario invalido`,
@@ -25,29 +29,13 @@ export class FormsCadComponent {
       })
       return
     }
-    await this.tasks.create({
+    this.forms_submit.emit({
       command: forms.form.controls['comando'].value,
       name: forms.form.controls['nome'].value,
       time: forms.form.controls['tempo'].value
-    }).then(
-      () => {
-        this.msg.add({
-          closable: false,
-          detail: `${forms.form.controls['nome'].value} foi criada com sucesso`,
-          styleClass: 'bg-success p5 text-center text-white rounded',
-          life: 10000
-        })
-      }
-    ).catch(
-      () => {
-        this.msg.add({
-          closable: false,
-          detail: `${forms.form.controls['nome'].value} nao foi possivel ser criada`,
-          styleClass: 'bg-danger p5 text-center text-white rounded',
-          life: 10000
-        })
-      }
-    )
+    })
+    forms.reset()
+
 
 
     // Aqui você pode adicionar a lógica para enviar os dados do formulário para o servidor

@@ -4,6 +4,10 @@
 
 }
 
+::ng-deep .p-panelmenu-header-content {
+    background-color: transparent;
+}
+
 ::ng-deep .p-panelmenu-header-action {
     text-decoration: none;
 }
@@ -25,7 +29,6 @@
 
 ::ng-deep .p-menuitem-icon {
     color: white;
-    /* padding: 0 10%; */
 }
 
 ::ng-deep .p-icon-wrapper {

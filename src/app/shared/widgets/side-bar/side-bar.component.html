@@ -1,12 +1,15 @@
 <div class="px-3 w-100 h-100 overflow-hidden overflow-y-scroll">
-  <p-panelMenu [multiple]="true" styleClass="text-white" [model]="tasks">
+  <p-panelMenu [multiple]="true" styleClass="" [model]="tasksmenu">
     <ng-template pTemplate="item" let-item>
       <div class="d-flex flex-column ">
-        <pre>{{item | keyValuePrinter}}</pre>
-        <app-button-canva [task]="item"></app-button-canva>
+        <!-- <pre>{{item | keyValuePrinter}}</pre> -->
+        <span>comando: {{item.database.command}}</span>
+        <span>ult exec: {{item.lastexec || 'sem execuções'}}</span>
+        <span>time: {{item.database.time_cron}}</span>
+        <span>status: {{item.task.running ? 'rodando': 'parado'}}</span>
+        <app-button-canva (button-click)="handleClick($event, item)" [task]="item"></app-button-canva>
       </div>
     </ng-template>
   </p-panelMenu>
 </div>
-
-<app-modal [visible]="modalstatus"></app-modal>
+<app-modal (forms-submit)="handleClick($event.modo, $event.item)" [visible]="modalstatus" [task]="selectedTask"></app-modal>

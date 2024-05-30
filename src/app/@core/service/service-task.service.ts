@@ -5,6 +5,7 @@ import { TaskHttpResponse } from '../models/task-http-response';
 import { TaskResultList } from '../models/tasks-result-list';
 import { fixResponse } from '../util/fix-response';
 import { HandleTask } from '../interfaces/handle-task';
+import { Task } from '../models/task';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,17 +29,16 @@ export class ServiceTaskService {
     return fixArray
   }
 
-  async deleteTask(taskid: number) {
-    await i_axios.delete(`/task/${taskid}`)
+  async deleteTask(task: HandleTask) {
+    await i_axios.delete(`/task/${task.id}`)
       .then(() => { console.log('criado com sucesso') })
       .catch(() => { console.log('falha ao criar a tarefa') })
   }
 
-  async execute(taskid: number): Promise<string> {
-    return await i_axios.post(`/task/execute/${taskid}`).then(
+  async execute(task: HandleTask): Promise<void> {
+    await i_axios.post(`/task/execute/${task.id}`).then(
       (data) => {
         console.log('comando executado')
-        return data.data
       }
     ).catch(
       () => {
@@ -48,17 +48,16 @@ export class ServiceTaskService {
     )
 
   }
-  async update(task_id: number, new_task: CreateTask) {
-    console.log(new_task)
-    await i_axios.put(`/task/${task_id}`, {
-      ...new_task,
+  async update(task: HandleTask) {
+    await i_axios.put(`/task/${task.id}`, {
+      ...task,
     })
       .then(() => { console.log('criado com sucesso') })
       .catch(() => { console.log('falha ao criar a tarefa') })
   }
 
-  async switchStatus(taskid: number) {
-    await i_axios.post(`/task/execute/${taskid}`)
+  async switchStatus(task: HandleTask) {
+    await i_axios.post(`/task/switchstatus/${task.id}`)
       .then(() => { console.log('criado com sucesso') })
       .catch(() => { console.log('falha ao criar a tarefa') })
   }
