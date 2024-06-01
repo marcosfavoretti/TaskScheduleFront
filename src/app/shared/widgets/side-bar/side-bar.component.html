@@ -3,13 +3,13 @@
     <ng-template pTemplate="item" let-item>
       <div class="d-flex flex-column ">
         <!-- <pre>{{item | keyValuePrinter}}</pre> -->
-        <span>comando: {{item.database.command}}</span>
+        <span>comando: {{item.command || 'sem comandos'}}</span>
         <span>ult exec: {{item.lastexec || 'sem execuções'}}</span>
-        <span>time: {{item.database.time_cron}}</span>
-        <span>status: {{item.task.running ? 'rodando': 'parado'}}</span>
-        <app-button-canva (button-click)="handleClick($event, item)" [task]="item"></app-button-canva>
+        <span>time: {{item.time_cron || 'sem timecron'}}</span>
+        <!-- <span>status: {{item.task.running ? 'rodando': 'parado'}}</span> -->
+        <app-button-canva (button-click)="handleClick($event, item.map)" [task]="item"></app-button-canva>
       </div>
     </ng-template>
   </p-panelMenu>
 </div>
-<app-modal (forms-submit)="handleClick($event.modo, $event.item)" [visible]="modalstatus" [task]="selectedTask"></app-modal>
+<!-- <app-modal (forms-submit)="handleClick($event.mode, $event.task)" [visible]="modalstatus" [task]="selectedTask"></app-modal> -->

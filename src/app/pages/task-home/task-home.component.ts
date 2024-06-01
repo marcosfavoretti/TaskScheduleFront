@@ -1,82 +1,72 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceTaskService } from 'src/app/@core/service/service-task.service';
-import { MenuItem, MessageService } from 'primeng/api';
-import { TaskResultList } from 'src/app/@core/models/tasks-result-list';
-import { HandleButtonService } from 'src/app/@core/interfaces/task-button-service';
+import { ButtonActions } from 'src/app/@core/enum/button-actions.enum';
+import { Store } from '@ngxs/store';
+import { Observable, tap } from 'rxjs';
+import { AddTaskAction, ExecuteTaskAction, LoadTaskAction, SwitchTaskAction, UpdateTaskAction, deleteTaskAction } from 'src/app/shared/stores/tasks-stores/tasks.action';
+import { MenuItem } from 'primeng/api';
 import { Fix2MenuItem } from 'src/app/@core/util/fix-menuItem';
-import { actionMap } from 'src/app/maps/action-map';
-import { HandleTask } from 'src/app/@core/interfaces/handle-task';
-import { CreateTask } from 'src/app/@core/interfaces/create-task';
+import { Task } from 'src/app/@core/models/Task';
+import { HandleAction } from 'src/app/@core/interfaces/handle-action';
 @Component({
   selector: 'app-task-home',
   templateUrl: './task-home.component.html',
   styleUrls: ['./task-home.component.css']
 })
-export class TaskHomeComponent implements OnInit {
-  tasks!: Array<TaskResultList>
+export class TaskHomeComponent  implements OnInit{
+  // tasks!: Array<TaskHttpResponse>
   menutasks!: Array<MenuItem>
-
+  task$ !: Observable<Task> ;
+  buttonAction = ButtonActions
+  
   constructor(
-    private tasksService: ServiceTaskService,
-    private messageService: MessageService
-  ) { }
+    private store: Store
+  ){}
 
-  async ngOnInit() {
-    this.tasks = await this.tasksService.getTasks()
-    this.menutasks = this.getMenuTasks()
-  }
-  async createTask($event: CreateTask) {
-    await this.tasksService.create($event).then(
-      () => {
-        this.messageService.add({
-          closable: false,
-          detail: `${$event.name} foi criada com sucesso`,
-          styleClass: 'bg-success p5 text-center text-white rounded',
-          life: 10000
-        })
-      }
-    ).catch(
-      () => {
-        this.messageService.add({
-          closable: false,
-          detail: `${$event.name} nao foi possivel ser criada`,
-          styleClass: 'bg-danger p5 text-center text-white rounded',
-          life: 10000
-        })
-      }
-    )
-    this.tasks = await this.tasksService.getTasks()
-    this.menutasks = this.getMenuTasks()
-  }
-
-
-  async makeaction($event: HandleButtonService) {
-    console.log($event.action, $event.task)
-    if (!$event.task) return
-    const actionfunc: (task: HandleTask) => Promise<void> = actionMap[$event.action]
-    console.log('->', actionfunc)
-    actionfunc({
-      command: $event.task?.database.command,
-      name: $event.task?.database.nome,
-      id: $event.task?.database.id,
-      time: $event.task?.database.time_cron
+  task = this.task$ = this.store.select(state => state.TaskStateModal.tasks)
+  
+  ngOnInit(): void {
+    this.store.dispatch(new LoadTaskAction())
+    this.task$.subscribe((data: any)=>{
+      this.menutasks = this.getMenuTasks(data)
     })
-      .then(
-        () =>
-          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Comando realizado', life: 3000 })
-
-      )
-      .catch(
-        (err) =>
-          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: `O comando teve algum problema na execução\n${err}`, life: 3000 })
-      )
-    this.tasks = await this.tasksService.getTasks()
-    this.menutasks = this.getMenuTasks()
   }
+  
+    actionHandle(handleBtn : HandleAction){
+      console.log(actionButton, task)
+      switch (actionButton) {
+        case ButtonActions.DELETE:
+          if(!task.id)return
+          this.store.dispatch(new deleteTaskAction(task.id))
+          break;
+          case ButtonActions.RUN:
+            if(!task.id)return
+            this.store.dispatch(new ExecuteTaskAction(task.id))
+            break;
+            case ButtonActions.SWITCHSTATUS:
+              if(!task.id)return
+              this.store.dispatch(new SwitchTaskAction(task.id))
+              break;
+              case ButtonActions.UPDATE:
+                if(!task.id)return
+                this.store.dispatch(new UpdateTaskAction({...task}, task.id))
+                break;
+                case ButtonActions.UPDATE_SUBMIT:
+                  if(!task.id)return
+                  this.store.dispatch(new UpdateTaskAction({...task}, task.id))  
+                  break;
+                  case ButtonActions.CREATE:
+                  this.store.dispatch(new AddTaskAction({...task}))
+                  break;
+                  
+                  default:
+                    throw new Error('não foi possível mapear a ação')
+                    break;
+                  }
+                }
 
-  getMenuTasks(): Array<MenuItem> {
-    return Fix2MenuItem(this.tasks)
-  }
-
-
-}
+                getMenuTasks(task: Task[]) {
+                  return Fix2MenuItem(task)
+                }
+              
+              }
+              

@@ -3,5 +3,6 @@ export enum ButtonActions {
     UPDATE = 'update',
     RUN = 'run',
     SWITCHSTATUS = 'switch',
-    UPDATE_SUBMIT = "update_submit"
+    UPDATE_SUBMIT = "update_submit",
+    CREATE = 'create'
 }

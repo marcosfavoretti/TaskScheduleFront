@@ -1,10 +1,9 @@
-import { TaskDetail } from "./taskdetail";
+import { TaskInfo } from "./TaskInfo"
 
-export class Task {
-    taskDetails!: TaskDetail;
-    nullArray!: any[];
-    stringArray!: string[];
-    additionalDetail!: TaskDetail;
-    cronDetails!: string[];
-    expiryDetail!: TaskDetail;
+export type Task = {
+    id?: number
+    nome: string
+    command: string
+    time_cron: string
+    taskInfo: TaskInfo
 }

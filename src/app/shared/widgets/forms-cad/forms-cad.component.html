@@ -6,24 +6,24 @@
             <div class="col-6 d-flex justify-content-end align-items-end">
                 <span class="p-float-label col-md-6 col-12">
                     <input pInputText class="input-group rounded p-3 w-100" id="nome" name="nome" type="text" required
-                        [value]="preset_input?.name" [ngModel]="preset_input?.name" />
+                        [value]="preset_input?.nome" [ngModel]="preset_input?.nome" />
                     <label for="nome" class="px-3">
-                        {{preset_input?.name || 'nome'}}
+                        {{preset_input?.nome || 'nome'}}
                     </label>
                 </span>
             </div>
             <div class="col-6 d-flex justify-content-start align-items-start">
                 <span class="p-float-label col-md-6 col-12">
-                    <input [value]="preset_input?.time" pInputText class="input-group rounded p-3 w-100" id="tempo"
-                        name="tempo" type="text" required [ngModel]="preset_input?.time" />
-                    <label for="tempo" class="px-3">{{preset_input?.time || 'tempo'}}</label>
+                    <input [value]="preset_input?.time_cron" pInputText class="input-group rounded p-3 w-100" id="tempo"
+                        name="tempo" type="text" required [ngModel]="preset_input?.time_cron" />
+                    <label for="tempo" class="px-3">{{preset_input?.time_cron || 'tempo'}}</label>
                 </span>
             </div>
         </div>
         <div class="d-flex align-content-center justify-content-center mb-4">
             <span class="p-float-label mt-4 col-md-6 col-12">
                 <input pInputText class="input-group rounded p-3 w-100" id="comando" name="comando" type="text" required
-                    [value]="preset_input?.command" [ngModel]="preset_input?.command" />
+                    [value]="preset_input?.command || ''" [ngModel]="preset_input?.command || ''" />
                 <label for="comando" class="px-3">
                     {{preset_input?.command || 'comando'}}
                 </label>

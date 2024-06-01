@@ -3,8 +3,8 @@ import { MessageService } from 'primeng/api';
 import { ServiceTaskService } from 'src/app/@core/service/service-task.service';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalExecuteLoadComponent } from '../modal-execute-load/modal-execute-load.component';
-import { TaskHttpResponse } from 'src/app/@core/models/task-http-response';
-import { TaskResultList } from 'src/app/@core/models/tasks-result-list';
+import { tap } from 'rxjs';
+import { Task } from 'src/app/@core/models/Task';
 
 @Component({
   selector: 'app-tasks-view',
@@ -14,7 +14,7 @@ import { TaskResultList } from 'src/app/@core/models/tasks-result-list';
 export class TasksViewComponent implements OnInit {
 
   constructor(private task: ServiceTaskService, private msg: MessageService) { }
-  tasks: TaskResultList[] = []
+  tasks: Task[] = []
   @ViewChild("modal") modal_c !: ModalComponent
   @ViewChild("load") load !: ModalExecuteLoadComponent
 
@@ -23,7 +23,7 @@ export class TasksViewComponent implements OnInit {
 
 
   async ngOnInit(): Promise<void> {
-    this.tasks = await this.task.getTasks()
+     await this.task.getTasks().pipe(tap((task: Array<Task>) => {this.tasks = task}))
     console.table(this.tasks)
   }
 

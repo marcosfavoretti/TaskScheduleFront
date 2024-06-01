@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { FormsCadComponent } from './shared/widgets/forms-cad/forms-cad.component';
-import { NgModule } from '@angular/core';
+import { NgModule, importProvidersFrom } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
@@ -24,6 +24,8 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenuModule } from 'primeng/menu';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { NgxsModule } from '@ngxs/store';
+import { TaskState } from './shared/stores/tasks-stores/tasks.state';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     NgbModule,
     PanelMenuModule,
   ],
-  providers: [MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService,    
+    importProvidersFrom(NgxsModule.forRoot([TaskState]))
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

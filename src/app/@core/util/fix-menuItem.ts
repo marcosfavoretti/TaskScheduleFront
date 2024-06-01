@@ -1,17 +1,17 @@
 import { MenuItem } from "primeng/api";
-import { TaskResultList } from "../models/tasks-result-list";
+import { TaskModel } from "../interfaces/task-model";
 
-export function Fix2MenuItem(task: Array<TaskResultList>) {
+export function Fix2MenuItem(task: Array<TaskModel>): Array<MenuItem> {
     const menuItens: Array<MenuItem> = task.map(map => {
         return {
-            label: `${map.database.id} - ${map.database.nome}`,
-            icon: map.task.running ? 'pi pi-stopwatch' : 'pi pi-pause',
+            label: `${map.id} - ${map.nome}`,
+            icon: map.nome ? 'pi pi-stopwatch' : 'pi pi-pause',
             items: [
                 {
-                    ...map
+                    map
                 }
             ]
         }
-    })
-    return menuItens
+    });
+    return menuItens;
 }

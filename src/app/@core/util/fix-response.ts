@@ -1,7 +1,6 @@
-import { TaskHttpResponse } from "../models/task-http-response";
-import { TaskResultList } from "../models/tasks-result-list";
+// import { TaskHttpResponse } from "../models/task-http-response";
 
-export function fixResponse(response: Array<TaskHttpResponse>): TaskResultList[] {
-    const fixArray: TaskResultList[] = response.map(map => { return { database: map.database, lastexec: map.lastexec, task: map.task[0] } })
-    return fixArray
-}
+// export function fixResponse(response: Array<TaskHttpResponse>): TaskHttpResponse[] {
+//     const fixArray: TaskHttpResponse[] = response.map(map => { return { database: map.database, lastexec: map.lastexec, task: map.task } })
+//     return fixArray
+// }

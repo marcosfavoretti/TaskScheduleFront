@@ -1,12 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonActions } from 'src/app/@core/enum/button-actions.enum';
-import { HandleTask } from 'src/app/@core/interfaces/handle-task';
-import { HandleButtonService } from 'src/app/@core/interfaces/task-button-service';
-import { Task } from 'src/app/@core/models/task';
-import { TaskResultList } from 'src/app/@core/models/tasks-result-list';
+import { popupFrases } from 'src/app/@core/maps/confirm-popup';
+import { Task } from 'src/app/@core/models/Task';
 import { ServiceTaskService } from 'src/app/@core/service/service-task.service';
-import { popupFrases } from 'src/app/maps/confirm-popup';
 
 @Component({
   selector: 'app-button-canva',
@@ -15,7 +12,7 @@ import { popupFrases } from 'src/app/maps/confirm-popup';
 })
 export class ButtonCanvaComponent {
   @Output('button-click') clickevent: EventEmitter<ButtonActions> = new EventEmitter<ButtonActions>()
-  @Input('task') task!: TaskResultList
+  @Input('task') task!: Task
   buttonsactions = ButtonActions
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService) { }
   confirm(event: Event, button: ButtonActions) {
@@ -25,6 +22,7 @@ export class ButtonCanvaComponent {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Comando aceito', life: 3000 });
+        console.log(button)
         this.clickevent.emit(button)
       },
       reject: () => {

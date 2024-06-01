@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MegaMenuItem, MenuItem } from 'primeng/api';
 import { ButtonActions } from 'src/app/@core/enum/button-actions.enum';
-import { HandleButtonService } from 'src/app/@core/interfaces/task-button-service';
-import { TaskResultList } from 'src/app/@core/models/tasks-result-list';
+import { HandleAction } from 'src/app/@core/interfaces/handle-action';
+import { Task } from 'src/app/@core/models/Task';
 
 @Component({
   selector: 'app-side-bar',
@@ -12,12 +12,12 @@ import { TaskResultList } from 'src/app/@core/models/tasks-result-list';
 export class SideBarComponent {
   modalstatus: boolean = false
   @Input('tasksmenu') tasksmenu?: Array<MenuItem>
-  @Input('tasks') tasks?: Array<TaskResultList>
-  @Output('task-handle') task_handle: EventEmitter<HandleButtonService> = new EventEmitter<HandleButtonService>()
-  selectedTask?: TaskResultList
+  @Input('tasks') tasks?: Array<Task>
+  @Output('task-handle') task_handle: EventEmitter<HandleAction> = new EventEmitter<HandleAction>()
+  selectedTask!: Task
 
 
-  handleClick(modo: ButtonActions, item: TaskResultList) {
+  handleClick(modo: ButtonActions, item: Task) {
     console.log(item)
     if (modo === ButtonActions.UPDATE) {
       this.selectedTask = item
@@ -25,7 +25,7 @@ export class SideBarComponent {
       return
     }
     this.task_handle.emit({
-      action: modo,
+      mode: modo,
       task: item
     })
   }

@@ -2,10 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ServiceTaskService } from 'src/app/@core/service/service-task.service';
 import { MessageService } from 'primeng/api';
 import { NgForm } from '@angular/forms';
-import { HandleTask } from 'src/app/@core/interfaces/handle-task';
-import { Task } from 'src/app/@core/models/task';
+import { Task } from 'src/app/@core/models/Task';
 import { CreateTask } from 'src/app/@core/interfaces/create-task';
-import { FormsTask } from 'src/app/@core/interfaces/forms-task';
 
 @Component({
   selector: 'app-forms-cad',
@@ -15,7 +13,7 @@ import { FormsTask } from 'src/app/@core/interfaces/forms-task';
 export class FormsCadComponent {
   @Input('tittle') tittle!: string
   @Input("preset-input") preset_input?: CreateTask
-  @Output('forms-submit') forms_submit: EventEmitter<FormsTask> = new EventEmitter<FormsTask>();
+  @Output('forms-submit') forms_submit: EventEmitter<CreateTask> = new EventEmitter<CreateTask>();
   constructor(
     private msg: MessageService) { }
   async submitForm(forms: NgForm) {
@@ -31,8 +29,8 @@ export class FormsCadComponent {
     }
     this.forms_submit.emit({
       command: forms.form.controls['comando'].value,
-      name: forms.form.controls['nome'].value,
-      time: forms.form.controls['tempo'].value
+      nome: forms.form.controls['nome'].value,
+      time_cron: forms.form.controls['tempo'].value
     })
     forms.reset()
 

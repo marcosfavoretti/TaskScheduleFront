@@ -1,5 +1,6 @@
-export interface CreateTask {
-    command?: string
-    time?: string
-    name?: string
+export interface CreateTask{
+    id?: number
+    nome: string
+    command: string
+    time_cron: string
 }

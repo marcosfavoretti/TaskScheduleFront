@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
+import { from, Observable } from 'rxjs';
 import { i_axios } from './axios.define';
 import { CreateTask } from '../interfaces/create-task';
-import { TaskHttpResponse } from '../models/task-http-response';
-import { TaskResultList } from '../models/tasks-result-list';
-import { fixResponse } from '../util/fix-response';
-import { HandleTask } from '../interfaces/handle-task';
-import { Task } from '../models/task';
+import { Task } from '../models/Task';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,52 +11,73 @@ export class ServiceTaskService {
 
   constructor() { }
 
-  async create(task: CreateTask) {
-    await i_axios.post('/task', {
-      "nome": task.name,
-      "command": task.command,
-      "time_cron": task.time
-    })
-      .then(() => { console.log('criado com sucesso') })
-      .catch(() => { console.log('falha ao criar a tarefa') })
+  create(task: CreateTask): Observable<Task> {
+    return from(
+      i_axios.post<Task>('/task', {
+        nome: task.nome,
+        command: task.command,
+        time_cron: task.time_cron
+      })
+      .then(response => response.data)
+      .catch(err => {
+        console.error('Failed to create task', err);
+        throw err;
+      })
+    );
   }
 
-  async getTasks(): Promise<TaskResultList[]> {
-    const { data } = await i_axios.get<TaskHttpResponse[]>('/task').catch((err) => { throw new Error(err) })
-    const fixArray = fixResponse(data)
-    return fixArray
+  getTasks(): Observable<Task[]> {
+    return from(
+      i_axios.get<Task[]>('/task')
+      .then(response => response.data)
+      .catch(err => {
+        console.error('Failed to get tasks', err);
+        throw err;
+      })
+    );
   }
 
-  async deleteTask(task: HandleTask) {
-    await i_axios.delete(`/task/${task.id}`)
-      .then(() => { console.log('criado com sucesso') })
-      .catch(() => { console.log('falha ao criar a tarefa') })
+  deleteTask(taskid: number): Observable<void> {
+    return from(
+      i_axios.delete(`/task/${taskid}`)
+      .then(() => console.log('Deleted successfully'))
+      .catch(err => {
+        console.error('Failed to delete task', err);
+        throw err;
+      })
+    );
   }
 
-  async execute(task: HandleTask): Promise<void> {
-    await i_axios.post(`/task/execute/${task.id}`).then(
-      (data) => {
-        console.log('comando executado')
-      }
-    ).catch(
-      () => {
-        console.log('deu erro ')
-        throw new Error('nao foi concluido o script')
-      }
-    )
-
-  }
-  async update(task: HandleTask) {
-    await i_axios.put(`/task/${task.id}`, {
-      ...task,
-    })
-      .then(() => { console.log('criado com sucesso') })
-      .catch(() => { console.log('falha ao criar a tarefa') })
+  execute(taskid: number): Observable<void> {
+    return from(
+      i_axios.post(`/task/execute/${taskid}`)
+      .then(() => console.log('Command executed'))
+      .catch(err => {
+        console.error('Failed to execute task', err);
+        throw err;
+      })
+    );
   }
 
-  async switchStatus(task: HandleTask) {
-    await i_axios.post(`/task/switchstatus/${task.id}`)
-      .then(() => { console.log('criado com sucesso') })
-      .catch(() => { console.log('falha ao criar a tarefa') })
+  update(taskid: number, newtask : Task): Observable<void> {
+    return from(
+      i_axios.put(`/task/${taskid}`, newtask)
+      .then(() => console.log('Updated successfully'))
+      .catch(err => {
+        console.error('Failed to update task', err);
+        throw err;
+      })
+    );
+  }
+
+  switchStatus(taskid: number): Observable<void> {
+    return from(
+      i_axios.post(`/task/switchstatus/${taskid}`)
+      .then(() => console.log('Status switched successfully'))
+      .catch(err => {
+        console.error('Failed to switch status', err);
+        throw err;
+      })
+    );
   }
 }

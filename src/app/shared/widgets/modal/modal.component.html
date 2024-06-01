@@ -1,7 +1,8 @@
 <p-dialog [modal]="true" [draggable]="false" [closable]="true" [(visible)]="visible"
     styleClass="bg-white rounded shadow d-flex align-items-center justify-content-center">
-    <app-forms-cad (forms-submit)="onSubmit($event)" tittle="Update de tarefas" [preset-input]="{command: task?.database?.command,
-    time: task?.database?.time_cron,
-    name:task?.database?.nome}">
+    <app-forms-cad (forms-submit)="onSubmit($event)" tittle="Update de tarefas" [preset-input]="{
+    command: task.command,
+    time_cron: task.time_cron,
+    nome:task.nome}">
     </app-forms-cad>
 </p-dialog>
