@@ -1,16 +1,14 @@
 <div class="w-100 h-100"
     style="background: linear-gradient(to right bottom, rgb(117, 115, 115) , rgb(241, 237, 237) );">
-    <p-toast />
-
     <div class="container-fluid h-100">
         <div class="row h-100">
-            <div class="col-4 h-100 p-0 bg-white rounded">
+            <div class="col-md-4 col-lg-4 col-12 h-100 p-0 bg-white rounded">
                 <div class="w-100 h-100" style="background: linear-gradient(to left top, gray, rgb(77, 76, 76));">
-                    <app-side-bar (task-handle)="actionHandle($event.mode,$event.task)"  [tasksmenu]="menutasks" [tasks]="task | async"></app-side-bar>
+                    <app-side-bar (task-handle)="actionHandle({mode:$event.mode, task:$event.task})"  [tasksmenu]="menutasks" [tasks]="task | async"></app-side-bar>
                 </div>
             </div>
-            <div class="col-8">
-                <app-forms-cad (forms-submit)="actionHandle(buttonAction.CREATE, $event)"  tittle="Cadastro de tarefas"></app-forms-cad>
+            <div class="col-md-8 col-lg-8 col-12 ">
+                <app-forms-cad (forms-submit)="actionHandle({mode:buttonAction.CREATE, task:$event})"  tittle="Cadastro de tarefas"></app-forms-cad>
             </div>
         </div>
     </div>

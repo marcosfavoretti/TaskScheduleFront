@@ -1,8 +1,9 @@
+import { CreateTask } from "src/app/@core/interfaces/create-task"
 import { Task } from "src/app/@core/models/Task"
 
 export class AddTaskAction{
     static readonly type = '[AddTask] add task'
-    constructor(public payload: Task){}
+    constructor(public payload: CreateTask){}
 }
 
 export class LoadTaskAction{
@@ -11,7 +12,7 @@ export class LoadTaskAction{
 }
 export class UpdateTaskAction{
     static readonly type = '[AddTask] update task'
-    constructor(public payload: Task, public taskid: number){}
+    constructor(public payload: CreateTask, public taskid: number){}
 }
 
 export class ExecuteTaskAction{

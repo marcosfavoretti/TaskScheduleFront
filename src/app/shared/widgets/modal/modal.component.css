@@ -1,0 +1,9 @@
+:host ::ng-deep .p-dialog-header-close-icon {
+    color: red;
+    font-size: 2rem;
+    text-align: end;
+  }
+
+  ::ng-deep .p-dialog-header{
+    width: 100%;
+  }

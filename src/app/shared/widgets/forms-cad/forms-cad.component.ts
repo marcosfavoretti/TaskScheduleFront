@@ -12,7 +12,7 @@ import { CreateTask } from 'src/app/@core/interfaces/create-task';
 })
 export class FormsCadComponent {
   @Input('tittle') tittle!: string
-  @Input("preset-input") preset_input?: CreateTask
+  @Input("preset-input") preset_input: CreateTask | undefined
   @Output('forms-submit') forms_submit: EventEmitter<CreateTask> = new EventEmitter<CreateTask>();
   constructor(
     private msg: MessageService) { }

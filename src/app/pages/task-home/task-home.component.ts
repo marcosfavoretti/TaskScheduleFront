@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ButtonActions } from 'src/app/@core/enum/button-actions.enum';
 import { Store } from '@ngxs/store';
-import { Observable, tap } from 'rxjs';
+import { Observable, catchError, of, tap } from 'rxjs';
 import { AddTaskAction, ExecuteTaskAction, LoadTaskAction, SwitchTaskAction, UpdateTaskAction, deleteTaskAction } from 'src/app/shared/stores/tasks-stores/tasks.action';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Fix2MenuItem } from 'src/app/@core/util/fix-menuItem';
 import { Task } from 'src/app/@core/models/Task';
 import { HandleAction } from 'src/app/@core/interfaces/handle-action';
@@ -19,7 +19,8 @@ export class TaskHomeComponent  implements OnInit{
   buttonAction = ButtonActions
   
   constructor(
-    private store: Store
+    private store: Store,
+    private messageService: MessageService
   ){}
 
   task = this.task$ = this.store.select(state => state.TaskStateModal.tasks)
@@ -32,30 +33,30 @@ export class TaskHomeComponent  implements OnInit{
   }
   
     actionHandle(handleBtn : HandleAction){
-      console.log(actionButton, task)
-      switch (actionButton) {
+      console.log(handleBtn.task)
+      switch (handleBtn.mode) {
         case ButtonActions.DELETE:
-          if(!task.id)return
-          this.store.dispatch(new deleteTaskAction(task.id))
+          if(!handleBtn.task.id) return
+          this.store.dispatch(new deleteTaskAction(handleBtn.task.id))
           break;
           case ButtonActions.RUN:
-            if(!task.id)return
-            this.store.dispatch(new ExecuteTaskAction(task.id))
+          if(!handleBtn.task.id) return
+          this.store.dispatch(new ExecuteTaskAction(handleBtn.task.id))
             break;
             case ButtonActions.SWITCHSTATUS:
-              if(!task.id)return
-              this.store.dispatch(new SwitchTaskAction(task.id))
+            if(!handleBtn.task.id) return
+              this.store.dispatch(new SwitchTaskAction(handleBtn.task.id))
               break;
               case ButtonActions.UPDATE:
-                if(!task.id)return
-                this.store.dispatch(new UpdateTaskAction({...task}, task.id))
+              if(!handleBtn.task.id) return
+                this.store.dispatch(new UpdateTaskAction({...handleBtn.task}, handleBtn.task.id))
                 break;
                 case ButtonActions.UPDATE_SUBMIT:
-                  if(!task.id)return
-                  this.store.dispatch(new UpdateTaskAction({...task}, task.id))  
+                if(!handleBtn.task.id) return
+                  this.store.dispatch(new UpdateTaskAction({...handleBtn.task}, handleBtn.task.id))  
                   break;
                   case ButtonActions.CREATE:
-                  this.store.dispatch(new AddTaskAction({...task}))
+                  this.store.dispatch(new AddTaskAction({...handleBtn.task}))
                   break;
                   
                   default:

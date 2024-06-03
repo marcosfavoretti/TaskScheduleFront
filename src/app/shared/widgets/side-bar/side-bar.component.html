@@ -4,12 +4,12 @@
       <div class="d-flex flex-column ">
         <!-- <pre>{{item | keyValuePrinter}}</pre> -->
         <span>comando: {{item.command || 'sem comandos'}}</span>
-        <span>ult exec: {{item.lastexec || 'sem execuções'}}</span>
+        <span>ult exec: {{item.taskInfo.lastExec || 'sem execuções'}}</span>
         <span>time: {{item.time_cron || 'sem timecron'}}</span>
         <!-- <span>status: {{item.task.running ? 'rodando': 'parado'}}</span> -->
-        <app-button-canva (button-click)="handleClick($event, item.map)" [task]="item"></app-button-canva>
+        <app-button-canva (button-click)="handleClick($event, item)" [task]="item"></app-button-canva>
       </div>
     </ng-template>
   </p-panelMenu>
 </div>
-<!-- <app-modal (forms-submit)="handleClick($event.mode, $event.task)" [visible]="modalstatus" [task]="selectedTask"></app-modal> -->
+<app-modal #modal (forms-submit)="updateSubmit({modo:$event.mode,item: $event.task})" ></app-modal>

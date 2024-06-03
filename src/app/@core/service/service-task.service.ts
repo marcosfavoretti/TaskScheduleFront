@@ -59,7 +59,7 @@ export class ServiceTaskService {
     );
   }
 
-  update(taskid: number, newtask : Task): Observable<void> {
+  update(taskid: number, newtask : CreateTask): Observable<void> {
     return from(
       i_axios.put(`/task/${taskid}`, newtask)
       .then(() => console.log('Updated successfully'))

@@ -21,12 +21,12 @@ export class ButtonCanvaComponent {
       message: popupFrases[button],
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Comando aceito', life: 3000 });
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'comando será executado!', life: 3000 });
         console.log(button)
         this.clickevent.emit(button)
       },
       reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Comando recusado', life: 3000 });
+        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'comando recusado', life: 3000 });
         console.log('botao nao aprovado')
       }
     });
